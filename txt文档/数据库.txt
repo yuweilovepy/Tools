@@ -1,0 +1,88 @@
+
+u   yunjidb   -p   yunjiDb123   写的权限
+
+
+select t.table_name from information_schema.TABLES t where t.TABLE_SCHEMA ="database_name" and t.TABLE_NAME ="table_name";
+
+
+SELECT UNIX_TIMESTAMP( '2012-12-12 14:00:00')  -- 将时间转换成时间戳
+
+select FROM_UNIXTIME( 1355292000 )   -- 将时间戳转换成 时间
+
+
+1.显示book数据库下所有表；
+
+show tables from book;
+
+2.查看数据库表内容
+
+2.1  show columns from table_name; 
+
+       show full columns from table_name;
+
+2.2  desc table_name;
+
+
+
+3.查看数据库表结构
+
+show create table table_name;
+
+==================================================
+
+创建表
+
+create table table_name(<字段名> <数据类型> <约束条件>，
+
+　　　　　　　　　　　<字段名> <数据类型> <约束条件>，
+
+　　　　　　　　　　　<字段名> <数据类型> 
+
+);
+
+删除表
+
+drop table table_name if exists table_1,table_2,table_3;
+
+ 
+
+修改数据库表
+
+1.添加列
+
+alter table table_name add <新列名><数据类型>[约束条件][filrst]|[after] [已有的列名]；
+
+2.修改列名
+
+alter table table_name change<旧列名><新列名><新数据类型>;
+
+===================================================
+
+3.修改列的数据类型
+
+alter table table_name <表名>modify<列名><数据类型>;
+
+4.修改列的排序
+
+alter table table_name modify <列1><数据类型>first|after <列2>
+
+===================================================
+
+5.删除列
+
+alter table <表名> drop <列名>
+
+6.修改表名
+
+alter table table_name_old rename to <table_name_new>;
+
+7.删除有条件的数据
+
+delete from table_name where <condition>;
+
+between xx  and  xx 
+
+8 修改表中数据
+update `runoob_tbl` set `submission_date`='2016-05-06' where `runoob_id`=3;
+
+

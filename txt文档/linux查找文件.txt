@@ -1,0 +1,275 @@
+﻿
+==========================
+抓取数据
+adb shell tcpdump -i any -p -n -s 0 -w /sdcard/capture.pcap
+//或
+/data/local/tcpdump -i any -p -n -s 0 -w /sdcard/capture.pcap
+
+
+
+
+## Charles 破解原理二：注册码进行注册
+
+在Help窗口内选择 Register Charles。
+
+    Registered Name: https://zhile.io
+    License Key: 48891cf209c6d32bf4
+
+
+https://www.axihe.com/tools/charles/charles/tutorial.html  使用教程
+
+https://malcolmyu.github.io/2017/02/26/Dive-into-Charles-HTTPS-Proxying/
+
+手机端安装证书
+
+http://chls.pro/ssl
+
+
+============================
+wc
+对每个文件输出行、单词、和字节统计数，如果指定了多于一个文件则还有
+个行数的总计。没有指定文件或指定的文件是 -，则读取标准输入。
+-c, --bytes, --chars
+	输出字节统计数。
+-l, --lines
+	输出换行符统计数。
+-L, --max-line-length
+	输出最长的行的长度。
+-w, --words
+	输出单词统计数。
+--help 
+	显示帮助并退出
+--version
+	输出版本信息并退出
+
+=============================
+
+sed & awk
+
+
+
+
+
+
+
+
+==============================
+
+grep
+1、或操作
+grep -E '123|abc' filename  // 找出文件（filename）中包含123或者包含abc的行
+egrep '123|abc' filename    // 用egrep同样可以实现
+awk '/123|abc/' filename   // awk 的实现方式
+
+2、与操作
+grep pattern1 files | grep pattern2 //显示既匹配 pattern1 又匹配 pattern2 的行。
+
+3、其他操作
+grep -i pattern files   //不区分大小写地搜索。默认情况区分大小写，
+grep -l pattern files   //只列出匹配的文件名，
+grep -L pattern files   //列出不匹配的文件名，
+grep -w pattern files  //只匹配整个单词，而不是字符串的一部分（如匹配‘magic’，而不是‘magical’），
+grep -C number pattern files //匹配的上下文分别显示[number]行，
+
+
+
+grep -C 5 foo file 显示file文件里匹配foo字串那行以及上下5行
+grep -B 5 foo file 显示foo及前5行
+grep -A 5 foo file 显示foo及后5行
+
+
+
+
+
+
+
+10.find查找文件
+
+find / -name httpd.conf　　#在根目录下查找文件httpd.conf，表示在整个硬盘查找
+find /etc -name httpd.conf　　#在/etc目录下文件httpd.conf
+find /etc -name 'srm'　　#使用通配符(0或者任意多个)。表示在/etc目录下查找文件名中含有字符串‘srm’的文件
+find . -name 'srm' 　　#表示当前目录下查找文件名开头是字符串‘srm’的文件
+
+find /etc/ -maxdepth 3  最大深度
+
+
+按照文件特征查找 　　　　
+find / -amin -10 　　# 查找在系统中最后10分钟访问的文件(access time)
+find / -atime -2　　 # 查找在系统中最后48小时访问的文件
+find / -empty 　　# 查找在系统中为空的文件或者文件夹
+find / -group cat 　　# 查找在系统中属于 group为cat的文件
+find / -mmin -5 　　# 查找在系统中最后5分钟里修改过的文件(modify time)
+find / -mtime -1 　　#查找在系统中最后24小时里修改过的文件
+find / -user fred 　　#查找在系统中属于fred这个用户的文件
+find / -size +10000c　　#查找出大于10000000字节的文件(c:字节，w:双字，k:KB，M:MB，G:GB)
+find / -size -1000k 　　#查找出小于1000KB的文件
+
+
+
+Ctrl + → 向右移动一个单词
+
+!!    执行上一条命令
+
+!pw      执行最近以pw开头的命令*
+
+Ctrl+r  搜索命令行使用过的历史命令记录*
+
+===========================================================================
+使用curl发送GET请求：curl protocol://address:port/url?args
+
+curl http://127.0.0.1:8080/login?admin&passwd=12345678
+
+使用curl发送POST请求：curl -d "args" protocol://address:port/url
+
+curl -d "user=admin&passwd=12345678" http://127.0.0.1:8080/login
+
+curl -H "Content-Type:application/json" -X POST -d '{"user": "admin", "passwd":"12345678"}' http://127.0.0.1:8000/login
+
+curl ifconfig.me  /  curl cip.cc 查看外网地址
+
+===========================================================================
+scp
+ linux采用scp命令拷贝文件到本地，拷贝本地文件到远程服务器
+
+// 假设远程服务器IP地址为 192.168.1.100
+
+ 
+1.从服务器复制文件到本地：
+
+scp root@192.168.1.100:/data/test.txt /home/myfile/
+
+root@192.168.1.100   root是目标服务器（有你需要拷贝文件的服务器）的用户名，192.168.1.100是IP地址，后面紧跟的 “：” 不要忘记，
+/data/test.txt 是目标服务器中你要拷贝文件的地址，接一个空格，后面的 /home/myfile/ 是本地接收文件的地址。
+
+ 
+
+2.从服务器复制文件夹到本地：
+
+scp -r root@192.168.1.100:/data/ /home/myfile/
+
+只需在前面加 -r 即可，就可以拷贝整个文件夹。
+
+ 
+
+3.从本地复制文件到服务器： -------------------->
+
+scp /home/myfile/test.txt root@192.168.1.100:/data/
+
+ 
+
+4.从本地复制文件夹到服务器：
+
+scp -r /home/myfile/ root@192.168.1.100:/data/
+
+
+1、SimpleHTTPServer使用方法
+
+    进入待分享的目录 
+    执行命令python -m SimpleHTTPServer 端口号
+
+       注意：不填端口号则默认使用8000端口。 
+
+    浏览器访问该主机的地址：http://IP:端口号/
+
+ 
+2、Python 3的用法
+与在Python 2的用法相似(python3 -m http.server  或者 python3 -m http.server 端口号)
+————————————————
+
+
+
+
+administrator@10.3.6.190
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+===================================================================================
+
+软件包安装
+rpm
+
+yum
+ 
+ 
+ 
+打包命令
+tar -cvf /tmp/etc.tar /etc <==仅打包，不压缩！  打包
+
+压缩文件 非打包
+# touch a.c       
+# tar -czvf test.tar.gz a.c   //压缩 a.c文件为test.tar.gz
+a.c
+
+列出压缩文件内容
+# tar -tzvf test.tar.gz 
+-rw-r--r-- root/root     0 2010-05-24 16:51:59 a.c
+
+解压文件
+# tar -xzvf test.tar.gz 
+a.c
+## 
+源码包
+wget  进行下载
+
+1.解压     tar -xzvf test.tar.gz
+
+
+2.配置  进入解压的目录
+
+./configure[--prefix=/usr/local/filename]
+
+
+3.编译
+make -j 4
+
+4安装
+make install
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

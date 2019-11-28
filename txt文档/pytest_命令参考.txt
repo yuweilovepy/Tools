@@ -1,0 +1,142 @@
+1. pytest --collect-only    查看当前目录下的测试用例 检测出来可执行的
+
+2.pytest -k   使用表达式指定希望运行的测试用例
+
+3.pytest -m 用于标记测试及分组 @pytest.mark.run_these_plase  // 装饰器进行标记
+
+pytest -m "mark1 and mark2"
+pytest -m "mark1 and not mark2"
+pytest -m "mark1 or mark2"
+
+
+
+
+
+
+=============================================
+上海悠悠
+
+1.pytest -q  显示及简结果
+
+2.按节点运行 pytest test_mod.py::test_func
+  pytest test_mod.py::TestClass::test_method
+
+3.从包里面运行 
+pytest --pyargs pkg.testing
+
+4.pytest -x 遇到错误时停止测试
+
+
+5.--maxfail=num  当用例树达到指定数量时 停止测试
+
+
+
+1.4 测试用例setup 和teardown
+
+setup_mode  teardown_module 
+
+
+
+1.5 -fixture 之 conftest.py ******
+自定义测试用例的预置条件
+@pytest.fixture(scope='function')
+@pytest.fixture(scope='module')
+
+conftest.py 配置    *****
+
+
+1.6 -fixture 之 yield  实现teardown
+
+
+
+1.7 参数化 parametrize  *******
+@pytest.mark.parametrize ("test_input,expected",[("3+5",8),()])  
+
+
+
+1.8 assert 断言 及异常信息
+
+assert xx 判断xx为真
+assert not xx 判断xx 不为真
+assert a in b 判断b 包含a
+assert a==b 判断a等于b
+assert a!=b 判断a不等于b
+
+
+1.9 -skip 跳过用例
+pytest -r 选项 
+@pytest.mark.skip(reason=" xxxxx")
+
+
+pytest.skip(reason,allow_module_level=True) t跳过整个模块级别
+
+
+pytest.mark.skipif(sys.platform=="win32","xxxx")
+
+##如果缺少某些导入，则跳过模块中的所有测试  ####
+pexpect=pytest.importorskip("pexpect")
+
+1.10
+使用自定义标记mark
+@pytest.mark.webtest
+
+
+-v 指定函数节点
+
+-k 匹配用例名称
+
+
+1.11 用例a跳过，跳过测试用例b和c并标记失败xfail
+pytest.xfail("exception")
+
+
+
+1.12  **  函数传参和fixture 传参数request
+
+
+
+1.13 命令行参数
+conftest.py
+
+
+
+pytest.ini
+[pytest]
+
+markers=
+webtest: run the webtest case
+hello: run the hello case
+
+
+
+doctest 测试框架 python自带模块
+注释下面
+>>> testcase
+
+单独抽离出来.txt
+>>> from XXX import xxxx
+>>> testcase
+
+pytest 兼容
+
+
+
+
+
+*********
+fixture
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

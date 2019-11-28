@@ -1,0 +1,311 @@
+--  adb logcat CacheWebView:D *:S >D:/log3.txt  //表示标签为t_timluo 等级为D 不输出其他等级日志    *S	:表示不输出其他等级日志
+
+(1) 显示全部日志信息：adb logcat
+(2) 显示某一TAG的日志信息：adb logcat -s TAG名称
+(3) 显示某一TAG的某一级别的日志信息：adb logcat TAG名称:级别.....TAG名称：级别 *:S
+注：日志级别（Ｖ-verbose,D-debug,I-info,W-warning,E-error,F-fatal,S-silent），＊:S（确保日志输出的时候是按照过滤器的说明限制）
+(4) 显示某一级别以上的全部日志信息：adb logcat *:级别
+(5) 以某种格式显示日志信息：adb logcat -v 格式
+注：日志格式（brief,process,tag,thread,raw,time,long）
+(6) 显示缓冲区中的日志信息：adb logcat -b 缓冲区类型
+注：缓冲区类型（radio-无线缓冲区，events-事件缓冲区，main-主缓冲区，默认）
+(7) 清理已经存在的日志：adb logcat -c
+(8) 将日志显示在控制台后退出：adb logcat -d
+(9) 将日志输出到文件：adb logcat -f 文件名
+注：DDMS的LogCat中文乱码：修改MultiLineReceiver类中的addOutput()方法，将其中的"ISO-8859-1"改成"UTF-8"，重新编译源码。
+
+=============================================================================
+---- http://blog.csdn.net/huangyabin001/article/details/38752697
+
+----- Android开发：使用Windows cmd窗口抓取Android手机log 
+http://blog.csdn.net/xiong_it/article/details/47278461
+
+adb push "C:\Users\timluo\Desktop\plugin_music_recognize.plg" /mnt/sdcard/tencent/tassistant/plugin
+
+db pull <手机端文件> <PC端目录路径>
+
+adb push <PC端文件> <SD目录路径>
+
+
+monkey
+
+adb shell monkey -p com.imaginer.yunji --throttle 200 --ignore-crashes --ignore-timeouts --ignore-security-exceptions --ignore-native-crashes --monitor-native-crashes -v -v -v 1000 >>D:\monkeyScreenLog.log
+
+======================================================================================
+    su
+ 4. 打开WIFI指令
+     svc wifi enable
+ 5. 关闭WIFI指令
+    svc wifi disable 
+ 6.svc data disable 关闭数据流量
+ 7.svc data prefer  打开数据流量
+
+
+1、在命令行中输入“adb shell”
+2、进入shell之后，再输入“cat /system/build.prop | grep "product"”
+
+其实，设备信息，主要是存放在“/system/build.prop”文件，通过“cat”命令就可以查看了。
+
+adb shell pm list packages 查看包命令
+
+adb shell am force-stop com.tencent.android.qqdownloader  杀进程命令
+
+adb shell pm clear com.tencent.android.qqdownloader  清除应用宝数据
+
+adb shell "ps | grep com.tencent.android.qqdownloader" 查看进程
+
+am start -n com.tencent.android.qqdownloader/com.tencent.assistant.debug.DTabActivity 启动插件安装弹窗 //adb shell ;su 后
+
+adb shell am start -a android.intent.action.VIEW -d "tmast://webview?url=http://cftweb.cs0309.3g.qq.com/writers/index.htm" 打开一个链接然后跳转
+
+adb install D:\\xxxx.apk(apk具体路径)。 安装某应用程序
+
+aapt dump badging apk(apk具体路径)。查看apk包的packageName、versionCode、applicationLabel、launcherActivity、permission等各种详细信息
+
+adb shell top -m 5查看应用CUP占用情况
+
+Native/Dalvik的Heap 信息：它分别给出的是JNI层和Java层的内存分配情况，如果发现这个值一直增长，则代表程序可能出现了内存泄漏：
+
+adb shell dumpsys meminfo 包名。
+
+adb shell screenrecord  --time-limit 10 /sdcard/demo.mp4  录制视频 //代表10秒 默认为180秒
+
+#   `date +%Y%m%d_%H%M%S`  linux 中时间命名文件
+
+
+echo %date:~0,4%%date:~5,2%%date:~8,2%%time:~0,2%%time:~3,2%  #  显示日期时间  截取
+
+adb shell "screencap -p | perl -pe 's/\x0D\x0A/\x0A/g'" > screen.png 截屏
+
+
+
+adb exec-out screencap -p >C:\Users\LENOVO\Desktop\screen\screen.png 截图到pc   ### 写一个脚本
+
+#%date:~0,4%%date:~5,2%%date:~8,2%%time:~0,2%%time:~3,2%%time:~6,2%  windows中以时间命名文件
+
+adb shell screencap -p /sdcard/screen.png  截图到手机sd卡
+
+adb -s emulator-xxxx install example.apk 安装程序到指定的设备上
+
+kill 进程时需要管理员权限  adb shell   su
+
+
+adb shell dumpsys [options]
+meminfo 显示内存信息
+cpuinfo 显示CPU信息
+account 显示accounts信息
+activity 显示所有的activities的信息
+window 显示键盘，窗口和它们的关系
+wifi 显示wifi信息
+
+
+
+
+1. 进行临界测试，手机盘空间存满的条件下应用会有何表现：
+通常手动添加大文件但是还是不够，通过如下
+
+2. 使用adb命令完成： 可以使用df查看手机sdcard内存空间  adb shell df
+通过如下 adb 命令在 /mnt/sdcard/ 目录下产生一个名为 bigfile 的文件，让其自动增长到磁盘剩余空间大小。
+在终端输入： adb shell dd if=/dev/zero of=/mnt/sdcard/bigfile
+ 最终显示结果如下：
+/mnt/sdcard/bigfile: write error: No space left on device
+3036001+0 records in
+3036000+0 records out
+1554432000 bytes transferred in 163.839 secs (9487557 bytes/sec)
+能这样做的前提是 获取手机的 root 权限！并且 USB 设置不能设为 U盘功能！
+
+3. adb shell dd if=/dev/zero of=/mnt/sdcard/bigfile 注解：
+dd：用指定大小的块拷贝一个文件，并在拷贝的同时进行指定的转换。
+注意：指定数字的地方若以下列字符结尾，则乘以相应的数字：b=512；c=1；k=1024；w=2
+参数注释：
+1. if=文件名：输入文件名，缺省为标准输入。即指定源文件。< if=input file >
+2. of=文件名：输出文件名，缺省为标准输出。即指定目的文件。< of=output file >
+
+
+adb root
+结果：
+C:\signapp>adb root
+restarting adbd as root # 说明有root权限 ，若是adbd cannot run as root in production builds 则说明没有root权限
+
+修改系统时间
+adb shell date -s "yyyymmdd.[[[hh]mm]ss]"  如 adb shell date -s "20160804.104901"  //暂测不准  adb shell date -s date +"%2016%08%04.%12%10%58" 还是无效
+
+
+
+adb shell pm list packages -3|cut -d: -f 2|sed s/[[:space:]]//g|xargs -t -i adb uninstall {}  一键删除第三方应用
+
+
+
+
+==============================================================================================================================================================
+
+fiddler  中文乱码
+具体步骤：
+
+1、windows按钮+R 
+
+2、输入regedit  +回车+是
+
+3、HKEY_CURRENT_USER\Software\Microsoft\Fiddler2
+
+4、右键新建，选字符串值  加上HeaderEncoding  然后值输入  GBK
+
+
+
+===========================================================================================================================
+windows
+
+
+1.按Win+R打开运行，输入”services.msc“打开服务。
+2.找到"Windows Update”，选择【属性】。
+3.将Windows Update的启动类型修改为【禁用】，按【确定】保存设置就可以禁用自动更新服务了。 
+
+=========================================================================================================================
+
+
+
+netsh interface show interface
+
+netsh interface set interface name="Local Area Connection" admin=DISABLED
+把结尾的"DISABLED"改为"ENABLED"为开启指定的网卡
+
+ netsh interface set interface name=“以太网” admin=DISABLED   //禁用以太网连接
+ netsh interface set interface name=“以太网” admin=ENABLED   //启用以太网连接
+ 
+ 
+//  修改IP，掩码，网关命令： netsh interface ip set address "以太网" static 192.168.3.188 255.255.255.0 192.168.1.1 1
+
+修改dns命令：netsh interface ip set dns "以太网" source=static addr=172.16.0.18   // doucker 环境
+
+修改dns自动获取: netsh interface ip set dns name="以太网" source=dhcp
+
+
+修改ip和dns为自动获取
+
+netsh interface ip set address name="以太网" source=dhcp
+
+netsh interface ip set dns name="以太网" source=dhcp
+ 
+ 
+nbtstat -A  192.168.1.123  查看计算机名
+
+===========================================================================================================================
+ 
+夜神模拟器   adb connect 127.0.0.1:62001
+
+逍遥模拟器 adb connect 127.0.0.1:21503
+
+
+########## 无数据线连接手机,可能有的手机不行
+1.usb连接手机  adb devices;
+2.adb tcpip 5555;
+然后拔掉数据线 执行下面3.4
+3.adb shell ifconfig wlan0;
+4.adb connect ipNO; # ipNo 是手机ip地址
+
+
+
+Fiddler默认配置中是看不到服务器IP的，接下来简单介绍下在fiddler上也能够看到请求的服务器IP：
+
+1、Fiddler---》Rules---》Customize Rules ，
+
+2、在CustomRules.js里搜索找到：static function Main() ，
+
+3、添加如下一行脚本：
+
+FiddlerObject.UI.lvSessions.AddBoundColumn("Server IP", 120, "X-HostIP");  
+
+OnBeforeRequest   请求前设置
+
+
+4.fiddler 模拟弱网测试    搜索  m_SimulateModem
+
+
+
+===========================================================================================================================
+WINDOWS 截图 录屏
+
+windows +G
+截图 windows+alt+printsc
+
+录屏 windows+alt+R
+
+位置  C:\Users\LENOVO\Videos\Captures
+
+
+模拟器录屏存放发的位置
+E:\Microvirt\MEmu\videos
+
+
+===========================================================================================================================
+国内主流的云测试平台：
+
+Testin云测 
+http://www.testin.cn/
+
+
+百度MTC ? ? ? ? ? ? ? ? ? ? ? ? ?
+http://mtc.baidu.com/
+
+
+腾讯优测 ? ? ? ? ? ? ? ? ? ? ? ? ? ? 
+http://utest.21kunpeng.com/
+
+
+阿里MQC ? ? ? ? ? ? ? ? ? ? ? ? ?
+(http://mqc.aliyun.com/)
+
+
+
+ES  搜索条件
+term  精确匹配输入的参数（不使用分析器）
+wildcard   // 没用过
+prefix   前缀匹配
+fuzzy    模糊匹配 
+range  范围匹配  匹配数值类型
+text   5.0版本这是字段印射类型吧？
+missing   是否存在该字段值  和exists反义 
+
+=========================================================================================================================
+Xshell 
+
+sz  下载
+rz  上传
+
+云集
+adb shell am force-stop com.imaginer.yunji
+
+adb shell pm clear com.imaginer.yunji
+ 
+  
+======================================================================================================================= 
+xmind pro
+1、把XMindCrack.jar复制到安装根目录；
+2、安装根目录下Xmind.ini文件尾部追加：
+    -javaagent:E:\XMind\XMindCrack.jar
+    备注：D:/Xmind/ 根据每个人的安装位置，不尽相同；
+3、找到文件hosts追加（文件在C:\Windows\System32\drivers\etc目录下）
+       127.0.0.1 xmind.net
+       127.0.0.1 www.xmind.net
+4、打开Xmind->帮助->序列号->输入序列号
+    邮箱随意；
+    XAka34A2rVRYJ4XBIU35UZMUEEF64CMMIYZCK2FZZUQNODEKUHGJLFMSLIQMQUCUBXRENLK6NZL37JXP4PZXQFILMQ2RG5R7G4QNDO3PSOEUBOCDRYSSXZGRARV6MGA33TN2AMUBHEL4FXMWYTTJDEINJXUAV4BAYKBDCZQWVF3LWYXSDCXY546U3NBGOI3ZPAP2SO3CSQFNB7VVIY123456789012345
+ 
+ 
+=========================================================================================================================
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
