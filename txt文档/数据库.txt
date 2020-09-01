@@ -1,6 +1,4 @@
 
-u   yunjidb   -p   yunjiDb123   写的权限
-
 
 select t.table_name from information_schema.TABLES t where t.TABLE_SCHEMA ="database_name" and t.TABLE_NAME ="table_name";
 
