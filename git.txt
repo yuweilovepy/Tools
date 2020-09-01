@@ -1,9 +1,5 @@
 ﻿ConfigParser
-$ git config --global user.name "WB0052"
-$ git config --global user.email "langh@yunjiglobal.com"
-ssh-keygen -t rsa -C "langh@yunjiglobal.com"
-$ git clone git@github.com:yuweilovepy/api_test.git
-id_rsa，id_rsa.pub
+
 
 https://github.com/jackfrued/Python-100-Days
 
